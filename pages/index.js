@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React, { useState, useEffect, useRef } from "react";
 
 const movies = {
@@ -62,16 +61,12 @@ export default function Home() {
   const keys = Object.keys(movies);
 
   const [answer, setAnswer] = useState(undefined);
-  const [randomEmoji, setRandomEmoji] = useState(undefined);
+  const [randomEmoji, setRandomEmoji] = useState("⚡️👦🔨");
   const formRef = useRef();
 
   const random_emoji = () => {
     return keys[Math.floor(Math.random() * keys.length)];
   };
-
-  useEffect(() => {
-    setRandomEmoji(random_emoji());
-  }, []);
 
   const guess = (event) => {
     event.preventDefault();
