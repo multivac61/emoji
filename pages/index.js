@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const movies = {
   "👦👴🚗⏱": "back to the future",
@@ -36,6 +36,12 @@ function Result({ answer }) {
 
   return (
     <div className="m-8 p-1">
+      {answer === undefined && (
+        <>
+          <p className="text-gray-600">You can do it 💪</p>
+          <p className="text-white">!</p>
+        </>
+      )}
       {answer === true && (
         <>
           <p className="text-green-600">Correct ☑️</p>
@@ -57,6 +63,7 @@ export default function Home() {
 
   const [answer, setAnswer] = useState(undefined);
   const [randomEmoji, setRandomEmoji] = useState(undefined);
+  const formRef = useRef();
 
   const random_emoji = () => {
     return keys[Math.floor(Math.random() * keys.length)];
@@ -77,24 +84,26 @@ export default function Home() {
     if (is_correct) {
       setRandomEmoji(random_emoji());
     }
+
+    formRef.current.reset();
   };
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen text-center">
-      <h1 className="m-2 text-5xl py-7 tracking-wider text-center md:text-6xl">
-        Guess the movie 🤔💭
+      <h1 className="m-2 text-3xl py-7 md:text-6xl">
+        Guess the 🎞
       </h1>
-      <h1 className="m-2 text-5xl py-7 tracking-widest text-center md:text-9xl ">
+      <h1 className="m-2 text-5xl py-7 tracking-[0.2em] md:text-9xl ">
         {randomEmoji}
       </h1>
       <div className="flex item-center px-8 mt-10 text-gray-700">
-        <form onSubmit={guess}>
+        <form onSubmit={guess} ref={formRef}>
           <input
             placeholder="Which movie?"
             className="p-2 text-center bg-gray-100 text-gray-600 m-2"
             id="name"
           />
-          <button className="px-8 text-xl font-bold">Guess</button>
+          <button className="px-8 p-2 text-xl font-bold">Guess</button>
         </form>
       </div>
       <Result answer={answer} />
