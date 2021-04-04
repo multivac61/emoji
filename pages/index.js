@@ -36,17 +36,17 @@ function Result({ answer }) {
 
   return (
     <div className="m-8 p-1">
-      {answer === true && 
-      <>
-      <p className="text-green-600">Correct ☑️</p>
-      <p className="text-gray-200">Now try this one 🙈</p>
-      </>
-      }
+      {answer === true && (
+        <>
+          <p className="text-green-600">Correct ☑️</p>
+          <p className="text-gray-200">Now try this one 🙈</p>
+        </>
+      )}
       {answer === false && (
-      <>
-        <p className="text-red-600">Incorrect 🚽</p>
-        <p className="text-gray-200">Try Again...</p>
-      </>
+        <>
+          <p className="text-red-600">Incorrect 🚽</p>
+          <p className="text-gray-200">Try Again...</p>
+        </>
       )}
     </div>
   );
@@ -58,6 +58,10 @@ export default function Home() {
   const [answer, setAnswer] = useState(undefined);
   const [randomEmoji, setRandomEmoji] = useState(undefined);
 
+  const random_emoji = () => {
+    return keys[Math.floor(Math.random() * keys.length)];
+  };
+
   useEffect(() => {
     setRandomEmoji(random_emoji());
   }, []);
@@ -65,7 +69,7 @@ export default function Home() {
   const guess = (event) => {
     event.preventDefault();
 
-    const guess = event.target.name.value.toLowerCase();
+    const guess = event.target.name.value.toLowerCase().trim();
     const is_correct = guess === movies[randomEmoji];
 
     setAnswer(is_correct);
@@ -75,16 +79,12 @@ export default function Home() {
     }
   };
 
-  const random_emoji = () => {
-    return keys[Math.floor(Math.random() * keys.length)];
-  };
-
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen px-20 text-center">
+    <main className="flex flex-col items-center justify-center min-h-screen text-center">
       <h1 className="m-2 text-5xl py-7 tracking-wider text-center md:text-6xl">
         Guess the movie 🤔💭
       </h1>
-      <h1 className="m-2 text-5xl py-7 tracking-widest text-center md:text-9xl">
+      <h1 className="m-2 text-5xl py-7 tracking-widest text-center md:text-9xl ">
         {randomEmoji}
       </h1>
       <div className="flex item-center px-8 mt-10 text-gray-700">
